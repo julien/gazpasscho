@@ -1,4 +1,9 @@
+const configStore = require('configStore');
+
 const {Database, Entry} = require('./database');
+const pkg = require('../package.json');
+
+const conf = new Configstore(pkg.name);
 
 let db;
 
@@ -29,6 +34,17 @@ function deleteEntry(id) {
   db.deleteEntry(id);
 
   return save();
+}
+
+function doesDBExist() {
+  if (!config.has('databaseFile') || !config.has('databasePassword')) {
+    return Promise.reject(false);
+  }
+
+  const databaseFile = conf.get('databaseFile');
+  const databasePassword = conf.get('databasePassword');
+
+  return open(databaseFile, databasePassword);
 }
 
 function getAllEntries() {
@@ -67,7 +83,11 @@ function search(keywords) {
 function open(databaseFile, databasePassword) {
   db = new Database(databaseFile);
 
-  return db.open(databasePassword);
+  return db.open(databasePassword)
+    .then(() => {
+      conf.set('databaseFile', databaseFile);
+      conf.set('databasePassword', databasePassword);
+    });
 }
 
 function close() {
@@ -76,6 +96,9 @@ function close() {
   console.log('close');
 
   db.close();
+
+  conf.delete('databaseFile');
+  conf.delete('databasePassword');
 
   return Promise.resolve('Database closed');
 }
