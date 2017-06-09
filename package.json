@@ -40,7 +40,10 @@
     "bourbon": "^4.3.4",
     "es6-promisify": "^5.0.0",
     "fuzzy-search": "^1.4.0",
-    "kdbxweb": "^1.0.1"
+    "kdbxweb": "^1.0.1",
+    "metal": "^2.13.0",
+    "metal-component": "^2.13.0",
+    "metal-soy": "^2.13.1"
   },
   "devDependencies": {
     "electron": "~1.6.2",
