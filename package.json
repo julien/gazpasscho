@@ -41,7 +41,6 @@
     "es6-promisify": "^5.0.0",
     "fuzzy-search": "^1.4.0",
     "kdbxweb": "^1.0.1",
-    "metal": "^2.13.0",
     "metal-component": "^1.0.0-rc.11",
     "metal-soy": "^1.0.0-rc.11"
   },
