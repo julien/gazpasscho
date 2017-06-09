@@ -9,6 +9,7 @@ const Kdbx = kp.Kdbx;
 const Credentials = kp.Credentials;
 const ProtectedValue = kp.ProtectedValue;
 const Consts = kp.Consts;
+const ByteUtils = kp.ByteUtils;
 
 class Database {
 	constructor(path) {
@@ -64,12 +65,53 @@ class Database {
 		return entry;
 	}
 
+	/**
+	 * Get entry by UUID
+	 * @return the Entry
+	 * @throws Error if entry does not exist
+	 */
+	getEntry(uuid) {
+		return Entry._fromDbEntry(this._getDbEntry(uuid));
+	}
+
+	/**
+	 * Deletes an existing entry given the Entry or its UUID
+	 */
+	deleteEntry(entryOrUuid) {
+		var uuid = entryOrUuid.uuid || entryOrUuid;
+
+		this._db.remove(this._getDbEntry(uuid));
+	}
+
 	dump() {
 		new DatabaseDumper(this._db).dump();
+	}
+
+	_getDbEntry(uuid) {
+		const dbEntry = this._defaultGroup.entries.find(
+			entry => entry.uuid.id == uuid
+		);
+
+		if (dbEntry === undefined) {
+			throw new Error(`Entry not found: ${uuid}`);
+		}
+
+		return dbEntry;
 	}
 }
 
 class Entry {
+	static _fromDbEntry(dbEntry) {
+		return new Entry({
+			uuid: dbEntry.uuid,
+			title: dbEntry.fields.Title,
+			icon: dbEntry.icon,
+			url: dbEntry.fields.URL,
+			userName: dbEntry.fields.UserName,
+			password: dbEntry.fields.Password.getText(),
+		});
+	}
+
 	constructor(
 		{
 			uuid = null,
@@ -176,3 +218,9 @@ module.exports = {
 // 	password: 'secret',
 // 	url: 'https://www.google.com',
 // });
+
+// *** Get an entry
+// var entry = db.getEntry('Bkxzh2wTW6YNhqoOeYUzww==');
+
+// *** Delete an entry
+// db.deleteEntry('Bkxzh2wTW6YNhqoOeYUzww==');
