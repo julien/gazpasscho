@@ -1,6 +1,9 @@
 const electron = require('electron');
+const api = require('./api');
+const getWindow = require('./window');
 
 const app = electron.app;
+const ipcMain = electron.ipcMain;
 
 const Menu = electron.Menu;
 const MenuItem = electron.MenuItem;
@@ -19,6 +22,19 @@ const appMenuItem = new MenuItem({
 		{ role: 'unhide' },
 		{ type: 'separator' },
 		{ role: 'quit' },
+	],
+});
+
+const fileMenuItem = new MenuItem({
+	label: 'File',
+	submenu: [
+		{
+			accelerator: 'Command+N',
+			click: () => {
+				getWindow().webContents.send('requestCreateEntry');
+			},
+			label: 'Create Entry'
+		}
 	],
 });
 
@@ -46,6 +62,7 @@ module.exports = function createMenu() {
 	menu = new Menu();
 
 	menu.append(appMenuItem);
+	menu.append(fileMenuItem);
 	menu.append(viewMenuItem);
 	menu.append(windowMenuItem);
 
