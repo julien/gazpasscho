@@ -16,6 +16,13 @@ ipcMain.on('deleteEntry', (event, {id}) => {
     .catch(error => event.sender.send('error', error));
 });
 
+ipcMain.on('doesDBExist', (event) => {
+  api
+    .doesDBExist()
+    .then(() => event.sender.send('dbExists'))
+    .catch(() => event.sender.send('dbNotExists'));
+});
+
 ipcMain.on('getAllEntries', event => {
   api
     .getAllEntries()
