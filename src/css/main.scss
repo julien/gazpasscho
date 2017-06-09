@@ -7,7 +7,21 @@
 .logo {
 	max-height: 40px;
 }
- 
+
 .header-toolbar {
 	background-color: #ece3da;
+}
+
+.sidebar {
+	box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.08);
+	height: calc(100vh - 66px);
+
+	.basic-search.input-group {
+		max-width: 100%;
+		padding: 0 12px;
+	}
+}
+
+.list-content {
+	margin-top: 20px;
 }
