@@ -36,7 +36,7 @@ function getAllEntries() {
 
 	if (!db) throw new Error('Database is not initialized.');
 
-	return Promise.resolve('Not implemented, but called successfully');
+	return db.findEntries();
 }
 
 function updateEntry(id, data) {
@@ -45,6 +45,12 @@ function updateEntry(id, data) {
 	console.log('data: ', data);
 
 	if (!db) throw new Error('Database is not initialized.');
+
+	const entry = Object.assign({}, db.getEntry(id), data);
+
+	db.updateEntry(entry);
+
+	return save().then(() => entry);
 }
 
 function search(keywords) {
@@ -52,6 +58,10 @@ function search(keywords) {
 	console.log('keywords: ', keywords);
 
 	if (!db) throw new Error('Database is not initialized.');
+
+	const entries = db.findEntries(keywords);
+
+	return entries;
 }
 
 function open(databaseFile, databasePassword) {
