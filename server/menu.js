@@ -41,8 +41,6 @@ const fileMenuItem = new MenuItem({
 const viewMenuItem = new MenuItem({
 	label: 'View',
 	submenu: [
-		{ role: 'reload' },
-		{ role: 'forcereload' },
 		{ role: 'toggledevtools' },
 		{ type: 'separator' },
 		{ role: 'resetzoom' },
