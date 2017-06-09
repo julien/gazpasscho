@@ -18,6 +18,9 @@ class Database {
 		this._defaultGroup = null;
 	}
 
+	/**
+ 	 * @return a Promise which resolves to the Database when the file is open
+	 */
 	open(password) {
 		return readFile(this._path)
 			.then(data =>
@@ -33,6 +36,10 @@ class Database {
 			.then(() => this);
 	}
 
+	/**
+	 * Save database to its file
+	 * @return a Promise which resolves to the Database when the file is saved
+	 */
 	save() {
 		return this._db
 			.save()
@@ -43,24 +50,20 @@ class Database {
 	/**
 	 * @param an Entry or a raw Object describing the informed fields
 	 * @return the newly created Entry (with its UUID informed)
+	 * @throws if the entry already exists (it has its UUID field set)
 	 */
 	addEntry(entry) {
 		if (entry.uuid != null) {
-			throw new Error('Trying to add an already existing entry', entry);
+			throw new Error(`Trying to add an already existing entry: ${entry.uuid}`);
 		}
 
 		// Clone entry (this coerces Objects and duplicates Entry's)
 		entry = new Entry(entry);
 
 		const dbEntry = this._db.createEntry(this._defaultGroup);
-
-		dbEntry.fields.Title = entry.title;
-		dbEntry.icon = entry.icon;
-		dbEntry.fields.URL = entry.url;
-		dbEntry.fields.UserName = entry.userName;
-		dbEntry.fields.Password = ProtectedValue.fromString(entry.password);
-
 		entry.uuid = dbEntry.uuid;
+
+		this.updateEntry(entry);
 
 		return entry;
 	}
@@ -68,14 +71,55 @@ class Database {
 	/**
 	 * Get entry by UUID
 	 * @return the Entry
-	 * @throws Error if entry does not exist
+	 * @throws if the entry does not exist
 	 */
 	getEntry(uuid) {
 		return Entry._fromDbEntry(this._getDbEntry(uuid));
 	}
 
 	/**
+	 * Find all entries matching keywords. If keywords is null or '', all entries
+	 * are returned.
+	 * @return an array of Entry objects
+	 */
+	findEntries(keywords = '') {
+		var dbEntries;
+
+		if (keywords == null || keywords == '') {
+			dbEntries = this._defaultGroup.entries;
+		} else {
+			dbEntries = this._defaultGroup.entries.filter(
+				entry =>
+					entry.fields.Title.indexOf(keywords) != -1 ||
+					entry.fields.URL.indexOf(keywords) != -1 ||
+					entry.fields.UserName.indexOf(keywords) != -1
+			);
+		}
+
+		return dbEntries.map(dbEntry => Entry._fromDbEntry(dbEntry));
+	}
+
+	/**
+   *
+	 * @throws if the entry does not exist
+	 */
+	updateEntry(entry) {
+		if (entry.uuid == null) {
+			throw new Error('Trying to update an entry with no UUID');
+		}
+
+		var dbEntry = this._getDbEntry(entry.uuid);
+
+		dbEntry.fields.Title = entry.title;
+		dbEntry.icon = entry.icon;
+		dbEntry.fields.URL = entry.url;
+		dbEntry.fields.UserName = entry.userName;
+		dbEntry.fields.Password = ProtectedValue.fromString(entry.password);
+	}
+
+	/**
 	 * Deletes an existing entry given the Entry or its UUID
+	 * @throws if the entry does not exist
 	 */
 	deleteEntry(entryOrUuid) {
 		var uuid = entryOrUuid.uuid || entryOrUuid;
@@ -87,6 +131,9 @@ class Database {
 		new DatabaseDumper(this._db).dump();
 	}
 
+	/**
+	 * @throws if the entry does not exist
+	 */
 	_getDbEntry(uuid) {
 		const dbEntry = this._defaultGroup.entries.find(
 			entry => entry.uuid.id == uuid
@@ -224,3 +271,14 @@ module.exports = {
 
 // *** Delete an entry
 // db.deleteEntry('Bkxzh2wTW6YNhqoOeYUzww==');
+
+// *** Update an entry
+// var entry = db.getEntry('BokXdYe/rFGWfAKxk/Y27A==');
+// entry.title = 'New title';
+// db.updateEntry(entry);
+
+// *** Get all entries
+// var entries = db.findEntries();
+
+// *** Search entries containing 'google' in the title, user or URL
+// var entries = db.findEntries('google');
