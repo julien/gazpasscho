@@ -4,9 +4,15 @@ const url = require('url');
 const electron = require('electron');
 const BrowserWindow = electron.BrowserWindow;
 
-module.exports = function createWindow() {
+let mainWindow;
+
+module.exports = function getWindow() {
+	if (mainWindow) {
+		return mainWindow;
+	}
+
 	// Create the browser window.
-	let mainWindow = new BrowserWindow({ width: 1280, height: 800 });
+	mainWindow = new BrowserWindow({ width: 1280, height: 800 });
 
 	// and load the index.html of the app.
 	mainWindow.loadURL(
@@ -27,4 +33,6 @@ module.exports = function createWindow() {
 		// when you should delete the corresponding element.
 		mainWindow = null;
 	});
+
+	return mainWindow;
 };
