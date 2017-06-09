@@ -1,3 +1,5 @@
+// *** See examples of usage at the bottom ***
+
 const fs = require('fs');
 const kp = require('kdbxweb');
 const promisify = require('es6-promisify');
@@ -12,6 +14,7 @@ class Database {
 	constructor(path) {
 		this._path = path;
 		this._db = null;
+		this._defaultGroup = null;
 	}
 
 	open(password) {
@@ -22,15 +25,67 @@ class Database {
 					new Credentials(ProtectedValue.fromString(password))
 				)
 			)
-			.then(db => (this._db = db));
+			.then(db => {
+				this._db = db;
+				this._defaultGroup = db.getDefaultGroup();
+			})
+			.then(() => this);
 	}
 
 	save() {
-		this._db.save().then(data => fs.writeFile(this._path, data));
+		return this._db
+			.save()
+			.then(data => fs.writeFile(this._path, new Uint8Array(data)))
+			.then(() => this);
+	}
+
+	/**
+	 * @param an Entry or a raw Object describing the informed fields
+	 * @return the newly created Entry (with its UUID informed)
+	 */
+	addEntry(entry) {
+		if (entry.uuid != null) {
+			throw new Error('Trying to add an already existing entry', entry);
+		}
+
+		// Clone entry (this coerces Objects and duplicates Entry's)
+		entry = new Entry(entry);
+
+		const dbEntry = this._db.createEntry(this._defaultGroup);
+
+		dbEntry.fields.Title = entry.title;
+		dbEntry.icon = entry.icon;
+		dbEntry.fields.URL = entry.url;
+		dbEntry.fields.UserName = entry.userName;
+		dbEntry.fields.Password = ProtectedValue.fromString(entry.password);
+
+		entry.uuid = dbEntry.uuid;
+
+		return entry;
 	}
 
 	dump() {
 		new DatabaseDumper(this._db).dump();
+	}
+}
+
+class Entry {
+	constructor(
+		{
+			uuid = null,
+			title = '',
+			icon = 0,
+			url = '',
+			userName = '',
+			password = '',
+		} = {}
+	) {
+		this.uuid = uuid;
+		this.title = title;
+		this.icon = icon;
+		this.url = url;
+		this.userName = userName;
+		this.password = password;
 	}
 }
 
@@ -103,8 +158,21 @@ class DatabaseDumper {
 	}
 }
 
-// var db = new Database('sample-keepass-db.kdbx');
-// db.open('password').then(() => db.dump());
 module.exports = {
 	Database: Database,
+	Entry: Entry,
 };
+
+// Usage examples:
+
+// *** Open database
+// var db = new Database('sample-keepass-db.kdbx');
+// db.open('password').then(() => ...);
+
+// *** Create an entry
+// db.addEntry({
+// 	title: 'My entry',
+// 	userName: 'me',
+// 	password: 'secret',
+// 	url: 'https://www.google.com',
+// });
