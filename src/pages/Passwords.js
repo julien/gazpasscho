@@ -2,6 +2,8 @@
 
 import Component from 'metal-component';
 import Soy from 'metal-soy';
+import Treeview from 'metal-treeview';
+
 const {ipcRenderer} = require('electron');
 
 import templates from './Passwords.soy';
