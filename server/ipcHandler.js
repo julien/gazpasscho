@@ -23,6 +23,7 @@ ipcMain.on('search', (event, { keywords }) => {
 
 ipcMain.on('open', (event, { databaseFile, databasePassword }) => {
 	api.open(databaseFile, databasePassword);
+	event.sender.send('databaseOpened');
 });
 
 ipcMain.on('close', event => {

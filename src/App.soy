@@ -6,6 +6,7 @@
  */
 {template .render}
 	{@param page: string}
+	{@param _databaseOpenedHandler: any}
 
 	<div>
 		<header class="header-toolbar header-toolbar-default">
@@ -23,7 +24,13 @@
 		</header>
 
 		{if $page == 'home'}
-			{call Home.render /}
+			{call Home.render}
+				{param events: [
+					'databaseOpened': $_databaseOpenedHandler
+				] /}
+			{/call}
+		{elseif $page == 'passwords'}
+			{call Passwords.render /}
 		{/if}
 	</div>
 {/template}
