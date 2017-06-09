@@ -4,13 +4,9 @@ const url = require("url");
 const electron = require("electron");
 const BrowserWindow = electron.BrowserWindow;
 
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
-let mainWindow;
-
 module.exports = function createWindow() {
   // Create the browser window.
-  mainWindow = new BrowserWindow({ width: 1280, height: 800 });
+  let mainWindow = new BrowserWindow({ width: 1280, height: 800 });
 
   // and load the index.html of the app.
   mainWindow.loadURL(
