@@ -1,11 +1,11 @@
-const electron = require('electron');
+const electron = require("electron");
 
 const Menu = electron.Menu;
 
 module.exports = function createMenu() {
-	let menu = new Menu();
+  let menu = new Menu();
 
-	Menu.setApplicationMenu(menu);
+  Menu.setApplicationMenu(menu);
 
-	console.log(menu);
-}
+  console.log(menu);
+};
