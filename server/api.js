@@ -1,4 +1,4 @@
-const configStore = require('configStore');
+const Configstore = require('configStore');
 
 const {Database, Entry} = require('./database');
 const pkg = require('../package.json');
