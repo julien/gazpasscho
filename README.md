@@ -13,7 +13,7 @@ can find it [here](https://nodejs.org).
   npm install
   ```
 
-3. Start de App:
+3. Start the App:
 
   ```
   npm start
