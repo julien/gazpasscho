@@ -30,9 +30,7 @@ const fileMenuItem = new MenuItem({
 	submenu: [
 		{
 			accelerator: 'Command+N',
-			click: () => {
-				getWindow().webContents.send('requestCreateEntry');
-			},
+			click: () => getWindow().webContents.send('requestCreateEntryForm'),
 			label: 'Create Entry',
 		},
 	],
