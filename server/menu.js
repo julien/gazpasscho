@@ -2,10 +2,12 @@ const electron = require("electron");
 
 const Menu = electron.Menu;
 
+let menu;
+
 module.exports = function createMenu() {
-  let menu = new Menu();
+	menu = new Menu();
 
-  Menu.setApplicationMenu(menu);
+	Menu.setApplicationMenu(menu);
 
-  console.log(menu);
+	console.log(menu);
 };
