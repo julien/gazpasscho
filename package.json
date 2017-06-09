@@ -17,11 +17,11 @@
     "test": "gulp test",
     "watch": "gulp build:watch",
     "precommit": "lint-staged",
-    "format": "prettier --write ./**/*.js"
+    "format": "prettier --write --single-quote --use-tabs --parser babylon --trailing-comma es5 --tab-width 2 '**/*.js'"
   },
   "lint-staged": {
-    "./**/*.js": [
-      "prettier --write",
+    "**/*.js": [
+      "prettier --write --single-quote --use-tabs --parser babylon --trailing-comma es5 --tab-width 2 '**/*.js'",
       "git add"
     ]
   },
