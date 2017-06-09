@@ -18,8 +18,9 @@ function search(keywords) {
 	console.log('search');
 }
 
-function open(filepath, password) {
-	console.log('open');
+function open(databaseFile, databasePassword) {
+	console.log('databaseFile: ', databaseFile);
+	console.log('databasePassword: ', databasePassword);
 }
 
 function close() {

@@ -21,8 +21,8 @@ ipcMain.on('search', (event, arg) => {
 	api.search();
 });
 
-ipcMain.on('open', (event, file, password) => {
-	api.open();
+ipcMain.on('open', (event, { databaseFile, databasePassword }) => {
+	api.open(databaseFile, databasePassword);
 });
 
 ipcMain.on('close', (event, arg) => {
