@@ -1,4 +1,4 @@
-const {Database, Entry} = require('./database');
+const { Database, Entry } = require('./database');
 
 let db;
 
@@ -15,7 +15,7 @@ function createEntry(title, userName, password, url) {
 	if (!password) return Promise.reject(new Error('A password is required.'));
 	if (!url) return Promise.reject(new Error('A url is required.'));
 
-	const newEntry = db.addEntry({title, userName, password, url});
+	const newEntry = db.addEntry({ title, userName, password, url });
 
 	return db.save().then(() => newEntry);
 }
