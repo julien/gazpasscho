@@ -24,7 +24,7 @@ function search(keywords) {
 }
 
 function open(databaseFile, databasePassword) {
-	console.log('open: ', open);
+	console.log('open');
 	console.log('databaseFile: ', databaseFile);
 	console.log('databasePassword: ', databasePassword);
 }
