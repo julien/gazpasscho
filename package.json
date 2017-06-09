@@ -13,7 +13,7 @@
   "main": "main.js",
   "scripts": {
     "build": "gulp build",
-    "start": "electron .",
+    "start": "gulp build && electron .",
     "test": "gulp test",
     "watch": "gulp build:watch"
   },
