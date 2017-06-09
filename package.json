@@ -37,6 +37,7 @@
   "author": "gazpasscho team",
   "license": "GPL",
   "dependencies": {
+    "bourbon": "^4.3.4",
     "metal-component": "^1.0.0-rc.11",
     "metal-soy": "^1.0.0-rc.11"
   },
