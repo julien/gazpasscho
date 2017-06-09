@@ -33,8 +33,8 @@ const fileMenuItem = new MenuItem({
 			click: () => {
 				getWindow().webContents.send('requestCreateEntry');
 			},
-			label: 'Create Entry'
-		}
+			label: 'Create Entry',
+		},
 	],
 });
 
