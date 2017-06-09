@@ -47,5 +47,9 @@
     "gulp-metal": "^1.0.0",
     "lexicon-ux": "^1.0.19",
     "prettier": "^1.4.4"
+  },
+  "dependencies": {
+    "es6-promisify": "^5.0.0",
+    "kdbxweb": "^1.0.1"
   }
 }
