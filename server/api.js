@@ -37,7 +37,7 @@ function deleteEntry(id) {
 }
 
 function doesDBExist() {
-  if (!config.has('databaseFile') || !config.has('databasePassword')) {
+  if (!conf.has('databaseFile') || !conf.has('databasePassword')) {
     return Promise.reject(false);
   }
 
