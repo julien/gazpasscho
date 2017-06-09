@@ -37,6 +37,7 @@
   "author": "gazpasscho team",
   "license": "GPL",
   "dependencies": {
+    "bourbon": "^4.3.4",
     "es6-promisify": "^5.0.0",
     "fuzzy-search": "^1.4.0",
     "kdbxweb": "^1.0.1"
