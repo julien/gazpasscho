@@ -4,8 +4,9 @@ const app = electron.app;
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow;
 
-const createWindow = require('./server/window');
+const getWindow = require('./server/window');
 const createMenu = require('./server/menu');
+require('./server/ipcHandler');
 
 let mainWindow;
 
@@ -13,7 +14,7 @@ let mainWindow;
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', () => {
-	mainWindow = createWindow();
+	mainWindow = getWindow();
 	createMenu();
 });
 
@@ -30,7 +31,7 @@ app.on('activate', function() {
 	// On OS X it's common to re-create a window in the app when the
 	// dock icon is clicked and there are no other windows open.
 	if (mainWindow === null) {
-		createWindow();
+		getWindow();
 	}
 });
 
