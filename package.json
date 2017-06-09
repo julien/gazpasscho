@@ -37,9 +37,9 @@
   "author": "gazpasscho team",
   "license": "GPL",
   "dependencies": {
-    "bourbon": "^4.3.4",
-    "metal-component": "^1.0.0-rc.11",
-    "metal-soy": "^1.0.0-rc.11"
+    "es6-promisify": "^5.0.0",
+    "fuzzy-search": "^1.4.0",
+    "kdbxweb": "^1.0.1"
   },
   "devDependencies": {
     "electron": "~1.6.2",
@@ -47,9 +47,5 @@
     "gulp-metal": "^1.0.0",
     "lexicon-ux": "^1.0.19",
     "prettier": "^1.4.4"
-  },
-  "dependencies": {
-    "es6-promisify": "^5.0.0",
-    "kdbxweb": "^1.0.1"
   }
 }

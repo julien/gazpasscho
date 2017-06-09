@@ -3,6 +3,7 @@
 const fs = require('fs');
 const kp = require('kdbxweb');
 const promisify = require('es6-promisify');
+const FuzzySearch = require('fuzzy-search');
 
 const readFile = promisify(fs.readFile);
 const Kdbx = kp.Kdbx;
@@ -88,12 +89,15 @@ class Database {
 		if (keywords == null || keywords == '') {
 			dbEntries = this._defaultGroup.entries;
 		} else {
-			dbEntries = this._defaultGroup.entries.filter(
-				entry =>
-					entry.fields.Title.indexOf(keywords) != -1 ||
-					entry.fields.URL.indexOf(keywords) != -1 ||
-					entry.fields.UserName.indexOf(keywords) != -1
+			const fuzzySearch = new FuzzySearch(
+				this._defaultGroup.entries,
+				['fields.Title', 'fields.URL', 'fields.UserName'],
+				{
+					caseSensitive: false,
+				}
 			);
+
+			dbEntries = fuzzySearch.search(keywords);
 		}
 
 		return dbEntries.map(dbEntry => Entry._fromDbEntry(dbEntry));
