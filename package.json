@@ -43,8 +43,7 @@
     "fuzzy-search": "^1.4.0",
     "kdbxweb": "^1.0.1",
     "metal-component": "^1.0.0-rc.11",
-    "metal-soy": "^1.0.0-rc.11",
-    "metal-treeview": "^2.1.0"
+    "metal-soy": "^1.0.0-rc.11"
   },
   "devDependencies": {
     "electron": "~1.6.2",
