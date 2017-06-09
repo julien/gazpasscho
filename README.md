@@ -1,5 +1,7 @@
 # Gazpasscho
 
+![](gazpasscho_logo.png)
+
 An Electron password manager application
 
 ## Setup
