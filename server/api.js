@@ -106,6 +106,7 @@ function close() {
 module.exports = {
   createEntry,
   deleteEntry,
+  doesDBExist,
   getAllEntries,
   updateEntry,
   search,
