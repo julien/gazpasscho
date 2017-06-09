@@ -10,6 +10,13 @@ import templates from './Home.soy';
 class Home extends Component {
 	created() {
 		ipcRenderer.on(
+			'error',
+			(event, error) => {
+				alert(error.code);
+			}
+		);
+
+		ipcRenderer.on(
 			'databaseOpened',
 			(event) => {
 				this.emit('databaseOpened');
