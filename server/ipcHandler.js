@@ -2,29 +2,29 @@ const ipcMain = require('electron').ipcMain;
 const api = require('./api');
 
 ipcMain.on('createEntry', (event, arg) => {
-	api.createEntry(data);
+	api.createEntry();
 });
 
 ipcMain.on('deleteEntry', (event, arg) => {
-	api.deleteEntry(data);
+	api.deleteEntry();
 });
 
 ipcMain.on('getAllEntries', (event, arg) => {
-	api.getAllEntries(data);
+	api.getAllEntries();
 });
 
 ipcMain.on('updateEntry', (event, arg) => {
-	api.updateEntry(data);
+	api.updateEntry();
 });
 
 ipcMain.on('search', (event, arg) => {
-	api.search(data);
+	api.search();
 });
 
-ipcMain.on('open', (event, arg) => {
-	api.open(data);
+ipcMain.on('open', (event, file, password) => {
+	api.open();
 });
 
 ipcMain.on('close', (event, arg) => {
-	api.close(data);
+	api.close();
 });
