@@ -4,6 +4,10 @@
 
 @import "node_modules/lexicon-ux/src/scss/atlas";
 
-body {
-	/*TODO*/
+.logo {
+	max-height: 40px;
+}
+ 
+.header-toolbar {
+	background-color: #ece3da;
 }
