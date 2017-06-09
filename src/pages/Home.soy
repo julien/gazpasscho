@@ -5,21 +5,23 @@
  * Note: has to be called ".render".
  */
 {template .render}
-	<div>
-		Select Database
+	<div class="panel list-content col-md-8 col-md-offset-2">
+		<h1>Select Database</h1>
 		<form data-onsubmit="_submitHandler">
-			<div class="form-group">
+			<div class="form-group list-content">
 				<label for="databaseFile">Database File</label>
 				<input data-onclick="_selectFileHandler" disabled="true" type="text" class="form-control" id="databaseFile" placeholder="Database File">
-				<button data-onclick="_selectFileHandler" type="button">Select File</button>
+				<button class="btn btn-default" data-onclick="_selectFileHandler" type="button">Select File</button>
 			</div>
 
-			<div class="form-group">
+			<div class="form-group list-content">
 				<label for="databasePassword">Database Password</label>
 				<input type="password" class="form-control" id="databasePassword" placeholder="Database Password">
 			</div>
 
-			<button type="submit" class="btn btn-default">Submit</button>
+			<div class="list-content">
+				<button type="submit" class="btn btn-lg btn-block btn-primary">Load Database</button>
+			</div>
 		</form>
 	</div>
 {/template}
