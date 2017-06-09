@@ -10,7 +10,7 @@
 		<form data-onsubmit="_submitHandler">
 			<div class="form-group">
 				<label for="databaseFile">Database File</label>
-				<input type="text" class="form-control" id="databaseFile" placeholder="Database File">
+				<input data-onclick="_selectFileHandler" disabled="true" type="text" class="form-control" id="databaseFile" placeholder="Database File">
 				<button data-onclick="_selectFileHandler" type="button">Select File</button>
 			</div>
 

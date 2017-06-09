@@ -8,6 +8,15 @@ const {dialog} = require('electron').remote;
 import templates from './Home.soy';
 
 class Home extends Component {
+	created() {
+		ipcRenderer.on(
+			'databaseOpened',
+			(event) => {
+				this.emit('databaseOpened');
+			}
+		);
+	}
+
 	_selectFileHandler(event) {
 		let self = this;
 		dialog.showOpenDialog((fileNames) => {
