@@ -1,8 +1,8 @@
 const ipcMain = require('electron').ipcMain;
 const api = require('./api');
 
-ipcMain.on('createEntry', (event, { data }) => {
-	api.createEntry(data);
+ipcMain.on('createEntry', (event, { title, userName, password, url }) => {
+	api.createEntry(title, userName, password, url);
 });
 
 ipcMain.on('deleteEntry', (event, { id }) => {
