@@ -8,51 +8,45 @@ const {dialog} = require('electron').remote;
 import templates from './Home.soy';
 
 class Home extends Component {
-	created() {
-		ipcRenderer.on(
-			'error',
-			(event, error) => {
-				alert(error.code);
-			}
-		);
+  created() {
+    ipcRenderer.on('error', (event, error) => {
+      alert(error.code);
+    });
 
-		ipcRenderer.on(
-			'databaseOpened',
-			(event) => {
-				this.emit('databaseOpened');
-			}
-		);
-	}
+    ipcRenderer.on('databaseOpened', event => {
+      this.emit('databaseOpened');
+    });
+    ipcRenderer.on('dbExists', (event, error) => {
+      this.emit('databaseOpened');
+    });
+    ipcRenderer.send('doesDBExist');
+  }
 
-	_selectFileHandler(event) {
-		let self = this;
-		dialog.showOpenDialog((fileNames) => {
+  _selectFileHandler(event) {
+    let self = this;
+    dialog.showOpenDialog(fileNames => {
+      if (fileNames === undefined) {
+        return;
+      }
 
-		    if(fileNames === undefined){
-		        return;
-		    }
+      self.element.querySelector('#databaseFile').value = fileNames[0];
+    });
+  }
 
-		    self.element.querySelector('#databaseFile').value = fileNames[0];
-		});
-	}
+  _submitHandler(event) {
+    event.preventDefault();
 
-	_submitHandler(event) {
-		event.preventDefault();
+    let form = event.delegateTarget;
 
-		let form = event.delegateTarget;
+    let databaseFile = form.querySelector('#databaseFile').value;
 
-		let databaseFile = form.querySelector('#databaseFile').value;
+    let databasePassword = form.querySelector('#databasePassword').value;
 
-		let databasePassword = form.querySelector('#databasePassword').value;
-
-		ipcRenderer.send(
-			'open',
-			{
-				databaseFile: databaseFile,
-				databasePassword: databasePassword
-			}
-		);
-	}
+    ipcRenderer.send('open', {
+      databaseFile: databaseFile,
+      databasePassword: databasePassword,
+    });
+  }
 }
 
 Soy.register(Home, templates);
