@@ -36,7 +36,7 @@ function getAllEntries() {
 
   if (!db) throw new Error('Database is not initialized.');
 
-  return db.findEntries();
+  return Promise.resolve(db.findEntries());
 }
 
 function updateEntry(id, data) {
