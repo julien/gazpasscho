@@ -1,0 +1,15 @@
+{namespace App}
+
+/**
+ * This renders the component's whole content.
+ * Note: has to be called ".render".
+ */
+{template .render}
+	{@param page: string}
+
+	<div>
+		{if $page == 'home'}
+			{call Home.render /}
+		{/if}
+	</div>
+{/template}
