@@ -15,7 +15,15 @@
     "build": "gulp build",
     "start": "gulp build && electron .",
     "test": "gulp test",
-    "watch": "gulp build:watch"
+    "watch": "gulp build:watch",
+    "precommit": "lint-staged",
+    "format": "prettier --write **/*.js"
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "private": true,
   "repository": "https://github.com/julien/gazpasscho",
@@ -35,6 +43,7 @@
   "devDependencies": {
     "electron": "~1.6.2",
     "gulp": "^3.8.11",
-    "gulp-metal": "^1.0.0"
+    "gulp-metal": "^1.0.0",
+    "prettier": "^1.4.4"
   }
 }
