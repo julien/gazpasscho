@@ -19,6 +19,8 @@ class Passwords extends Component {
 	setEntries(event, entries) {
 		this.entries = entries;
 
+		this.selectedEntry = undefined;
+
 		let entriesDictionary = {};
 
 		entries.forEach((entry) => {
