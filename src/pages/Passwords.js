@@ -2,7 +2,6 @@
 
 import Component from 'metal-component';
 import Soy from 'metal-soy';
-import Treeview from 'metal-treeview';
 
 const {ipcRenderer} = require('electron');
 
@@ -10,19 +9,28 @@ import templates from './Passwords.soy';
 
 class Passwords extends Component {
 	created() {
-		ipcRenderer.on('allEntriesRetrieved', (event, entries) => {
-			this.entries = entries;
+		ipcRenderer.on('allEntriesRetrieved', this.setEntries.bind(this));
 
-			let entriesDictionary = {};
-
-			entries.forEach((entry) => {
-				entriesDictionary[entry.uuid.id] = entry;
-			});
-
-			this.entriesDictionary = entriesDictionary;
-		});
+		ipcRenderer.on('entryDeleted', this.setEntries.bind(this));
 
 		ipcRenderer.send('getAllEntries');
+	}
+
+	setEntries(event, entries) {
+		this.entries = entries;
+
+		let entriesDictionary = {};
+
+		entries.forEach((entry) => {
+			entriesDictionary[entry.uuid.id] = entry;
+		});
+
+		this.entriesDictionary = entriesDictionary;
+
+	}
+
+	_deleteEntryHandler(event) {
+		ipcRenderer.send('deleteEntry', {id:this.selectedEntry.uuid.id});
 	}
 
 	_selectEntryHandler(event) {
